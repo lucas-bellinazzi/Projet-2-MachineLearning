@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, Normalizer, MinMaxScaler
@@ -26,7 +27,7 @@ if 'target' not in st.session_state:
   st.session_state.target = ''
 
 st.sidebar.title("Navigation")
-menu = st.sidebar.radio("", ["Téléchargement", "Machine Learning", "Prédiction"], label_visibility="collapsed")
+menu = st.sidebar.radio("", ["Téléchargement", "Apprendisage Automatique", "Prédiction"], label_visibility="collapsed")
 
 # === 1. Téléchargement de Fichier ===
 if menu == "Téléchargement":
@@ -36,8 +37,14 @@ if menu == "Téléchargement":
   
   if uploaded_file is not None:
     try:
-      col=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome']
-      df = pd.read_csv(uploaded_file, names=col)
+      if "pima" in uploaded_file.name.lower():
+        col=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome']
+        df = pd.read_csv(uploaded_file, names=col)
+      elif "housing" in uploaded_file.name.lower():
+        col = ['CRIM','ZN','INDUS','CHAS','NOX','RM','AGE','DIS','RAD','TAXE','PTRATIO','B','LSTAT','MEDV']
+        df = pd.read_csv(uploaded_file, names=col, delim_whitespace=True)
+      else:
+        df = pd.read_csv(uploaded_file)
       
       if df.empty:
         st.error("Erreur: Le fichier semble vide.")
@@ -46,10 +53,38 @@ if menu == "Téléchargement":
         st.success(f"Fichier chargé avec succès! Shape: {df.shape}")
         
         st.markdown("## Aperçu des données")
-        st.dataframe(df.head())
+        st.dataframe(df)
         
         st.markdown("## Statistiques descriptives")
         st.write(df.describe())
+
+        st.markdown("## Histogrammes")
+        try:
+          n_features = len(df.columns)
+          n_rows = (n_features + 3) // 4
+          
+          fig, axes = plt.subplots(nrows=n_rows, ncols=4, figsize=(15, 3*n_rows))
+          
+          if n_rows == 1:
+            axes = axes.reshape(1, -1)
+          
+          for i, column in enumerate(df.columns):
+            row = i // 4
+            col = i % 4
+            df[column].hist(bins=15, ax=axes[row, col], grid=True)
+            axes[row, col].set_title(column)
+          
+          for i in range(n_features, n_rows*4):
+            row = i // 4
+            col = i % 4
+            fig.delaxes(axes[row, col])
+          
+          plt.suptitle("Histogrammes des caractéristiques", y=1.02)
+          plt.tight_layout()
+          st.pyplot(fig)
+          
+        except Exception as e:
+          st.error(f"Erreur lors de la génération des histogrammes: {str(e)}")
         
         st.session_state.modeles_entraines = {}
         st.session_state.scaler = None
@@ -59,9 +94,9 @@ if menu == "Téléchargement":
       st.error(f"Erreur de lecture: {str(e)}")
       st.info("Conseil: Vérifiez que le fichier est un CSV valide avec des virgules comme séparateur.")
 
-# === 2. Machine Learning ===
-elif menu == "Machine Learning":
-  st.header("Machine Learning")
+# === 2. Apprendisage Automatique ===
+elif menu == "Apprendisage Automatique":
+  st.header("Apprendisage Automatique")
   
   if st.session_state.data is None:
     st.warning("Veuillez d'abord téléverser un fichier CSV.")
