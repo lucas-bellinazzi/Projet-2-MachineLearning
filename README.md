@@ -1,18 +1,20 @@
-# Création d'une Application Streamlit pour l’Apprentissage Automatique
+# Creating a Streamlit Application for Machine Learning
 
-## Création de l'environnement virtuel
+## Creating the virtual environment
+
+If you have more than one version of Python installed on your machine, type the command below to force the installation of the venv development environment in version 3.11:
 
 ```python
-python -m venv venv
+py -3.11 -m venv venv
 ```
 
-## Activation de l'environnement virtuel
+## Activating the virtual environment
 
 ```python
 .\venv\Scripts\activate
 ```
 
-## Mise à jour du pip
+## Upgrading pip
 
 ```python
 python.exe -m pip install --upgrade pip
@@ -24,19 +26,19 @@ python.exe -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Lancement de l'application
+## Running the application
 
 ```python
 streamlit run app.py
 ```
 
-## Lien vers le dépôt GitHub
+## Link to the GitHub repository
 
-[Projet 2 - Apprentissage Automatique](https://github.com/lucas-ladeira/Projet-2-MachineLearning)
+[Project 2 - Machine Learning](https://github.com/lucas-ladeira/Projet-2-MachineLearning)
 
-## Lien vers Kaggle Dataset
+## Link to the Kaggle Dataset
 
-Données utilisées pour les tests :
+Data used for testing:
 - [California Housing Prices](https://www.kaggle.com/datasets/camnugent/california-housing-prices)
 
 - [Pima Indians Diabetes Database](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
