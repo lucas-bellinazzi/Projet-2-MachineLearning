@@ -1,4 +1,17 @@
-# Creating a Streamlit Application for Machine Learning
+# Streamlit Application for Machine Learning
+
+An interactive web-based Machine Learning platform designed to facilitate data exploration, model training, evaluation, and real-time inference.
+
+## Project Description
+This application provides a user-friendly interface to upload custom datasets, perform quick exploratory data analysis (including descriptive statistics and feature histograms), select target variables, configure preprocessing options (like scaling), train multiple Machine Learning models (such as Random Forest, SVM, Logistic/Linear Regression, and Decision Trees), compare their performance using visual charts, and perform interactive predictions using sliders.
+
+## Technologies & Core Libraries
+- **Language**: Python
+- **Web Interface**: Streamlit
+- **Machine Learning**: Scikit-Learn (Logistic Regression, Linear Regression, SVM, SVR, Random Forests, Decision Trees)
+- **Data Manipulation**: Pandas, NumPy
+- **Visualization**: Matplotlib, Seaborn
+
 
 ## Creating the virtual environment
 
